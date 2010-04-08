@@ -22,6 +22,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.import time
 
+import time
 from wsgiref.util import setup_testing_defaults
 from wsgiref.simple_server import make_server
 
