@@ -27,9 +27,7 @@ Use `make_psycopg_green()` to enable gevent support in Psycopg.
 import psycopg2
 from psycopg2 import extensions
 
-from gevent.hub import getcurrent, get_hub
-from gevent.core import read_event, write_event, EV_TIMEOUT
-from gevent.hub import sleep as gevent_sleep
+from gevent.socket import wait_read, wait_write
 
 def make_psycopg_green():
     """Configure Psycopg to be used with gevent in non-blocking way."""
@@ -39,9 +37,6 @@ def make_psycopg_green():
             % psycopg2.__version__)
 
     extensions.set_wait_callback(gevent_wait_callback)
-
-class Timeout(Exception):
-    pass
 
 def gevent_wait_callback(conn, timeout=-1):
     """A wait callback useful to allow gevent to work with Psycopg."""
@@ -56,27 +51,3 @@ def gevent_wait_callback(conn, timeout=-1):
         else:
             raise psycopg2.OperationalError(
                 "Bad result from poll: %r" % state)
-
-def _wait_helper(ev, evtype):
-    current = ev.arg
-    if evtype & EV_TIMEOUT:
-        current.throw(Timeout())
-    else:
-        current.switch(ev)
-
-def wait_read(fileno, timeout=-1):
-    evt = read_event(fileno, _wait_helper, timeout, getcurrent())
-    try:
-        switch_result = get_hub().switch()
-        assert evt is switch_result, 'Invalid switch into wait_read(): %r' % (switch_result, )
-    finally:
-        evt.cancel()
-
-
-def wait_write(fileno, timeout=-1):
-    evt = write_event(fileno, _wait_helper, timeout, getcurrent())
-    try:
-        switch_result = get_hub().switch()
-        assert evt is switch_result, 'Invalid switch into wait_write(): %r' % (switch_result, )
-    finally:
-        evt.cancel()
