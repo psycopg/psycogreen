@@ -1,0 +1,6 @@
+~$
+\.sw[op]$
+\.pyc$
+\.orig$
+\.rej$
+^lib
