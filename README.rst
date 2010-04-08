@@ -14,4 +14,4 @@ You can check out the `Psycopg green branch`__ from its GIT repository.
 .. _coroutine: http://en.wikipedia.org/wiki/Coroutine
 .. _Eventlet: http://eventlet.net/
 .. _gevent: http://www.gevent.org/
-  .. __: https://www.develer.com/gitweb/pub?p=users/piro/psycopg2.git;a=shortlog;h=refs/heads/green
+.. __: https://www.develer.com/gitweb/pub?p=users/piro/psycopg2.git;a=shortlog;h=refs/heads/green
