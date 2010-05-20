@@ -25,28 +25,33 @@ Use `make_psycopg_green()` to enable eventlet support in Psycopg.
 # THE SOFTWARE.
 
 import psycopg2
-from psycopg2 import extensions
+import psycopg2.extensions
 
 from eventlet.hubs import trampoline
 
 def make_psycopg_green():
     """Configure Psycopg to be used with eventlet in non-blocking way."""
-    if not hasattr(extensions, 'set_wait_callback'):
+    if not hasattr(psycopg2.extensions, 'set_wait_callback'):
         raise ImportError(
             "support for coroutines not available in this Psycopg version (%s)"
             % psycopg2.__version__)
 
-    extensions.set_wait_callback(eventlet_wait_callback)
+    psycopg2.extensions.set_wait_callback(eventlet_wait_callback)
 
-def eventlet_wait_callback(conn, timeout=-1):
+def eventlet_wait_callback(conn, timeout=-1,
+        # access these objects with LOAD_FAST instead of LOAD_GLOBAL lookup
+        POLL_OK = psycopg2.extensions.POLL_OK,
+        POLL_READ = psycopg2.extensions.POLL_READ,
+        POLL_WRITE = psycopg2.extensions.POLL_WRITE,
+        trampoline = trampoline):
     """A wait callback useful to allow eventlet to work with Psycopg."""
     while 1:
         state = conn.poll()
-        if state == extensions.POLL_OK:
+        if state == POLL_OK:
             break
-        elif state == extensions.POLL_READ:
+        elif state == POLL_READ:
             trampoline(conn.fileno(), read=True)
-        elif state == extensions.POLL_WRITE:
+        elif state == POLL_WRITE:
             trampoline(conn.fileno(), write=True)
         else:
             raise psycopg2.OperationalError(
