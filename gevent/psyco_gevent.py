@@ -38,7 +38,7 @@ def make_psycopg_green():
 
     psycopg2.extensions.set_wait_callback(gevent_wait_callback)
 
-def gevent_wait_callback(conn, timeout=-1,
+def gevent_wait_callback(conn, timeout=None,
         # access these objects with LOAD_FAST instead of LOAD_GLOBAL lookup
         POLL_OK = psycopg2.extensions.POLL_OK,
         POLL_READ = psycopg2.extensions.POLL_READ,
