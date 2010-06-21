@@ -25,34 +25,28 @@ Use `make_psycopg_green()` to enable gevent support in Psycopg.
 # THE SOFTWARE.
 
 import psycopg2
-import psycopg2.extensions
+from psycopg2 import extensions
 
-import gevent.socket
+from gevent.socket import wait_read, wait_write
 
 def make_psycopg_green():
     """Configure Psycopg to be used with gevent in non-blocking way."""
-    if not hasattr(psycopg2.extensions, 'set_wait_callback'):
+    if not hasattr(extensions, 'set_wait_callback'):
         raise ImportError(
             "support for coroutines not available in this Psycopg version (%s)"
             % psycopg2.__version__)
 
-    psycopg2.extensions.set_wait_callback(gevent_wait_callback)
+    extensions.set_wait_callback(gevent_wait_callback)
 
-def gevent_wait_callback(conn, timeout=None,
-        # access these objects with LOAD_FAST instead of LOAD_GLOBAL lookup
-        POLL_OK = psycopg2.extensions.POLL_OK,
-        POLL_READ = psycopg2.extensions.POLL_READ,
-        POLL_WRITE = psycopg2.extensions.POLL_WRITE,
-        wait_read = gevent.socket.wait_read,
-        wait_write = gevent.socket.wait_write):
+def gevent_wait_callback(conn, timeout=None):
     """A wait callback useful to allow gevent to work with Psycopg."""
     while 1:
         state = conn.poll()
-        if state == POLL_OK:
+        if state == extensions.POLL_OK:
             break
-        elif state == POLL_READ:
+        elif state == extensions.POLL_READ:
             wait_read(conn.fileno(), timeout=timeout)
-        elif state == POLL_WRITE:
+        elif state == extensions.POLL_WRITE:
             wait_write(conn.fileno(), timeout=timeout)
         else:
             raise psycopg2.OperationalError(
