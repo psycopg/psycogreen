@@ -1,28 +1,29 @@
-psycogreen -- integrate psycopg2 with coroutine libraries
-=========================================================
+psycogreen -- integrating psycopg2 with coroutine libraries
+===========================================================
+
+The `psycogreen`_ package is a contained of callbacks to make psycopg2 work
+with coroutine libraries, using asynchronous calls internally but offering a
+blocking interface so that regular code can run unmodified.
 
 Since `release 2.2`__, `Psycopg`_ offers `coroutines support`__.
 
-Psycopg is a C extension module, so it can't be monkey-patched to be
-coroutine-friendly. Instead it now exposes `a hook`__
-where a coroutine library can install its wait code. Psycopg will call the
-hook whenever it executes a libpq call that may block. Coroutine libraries can
-implement their "wait callaback" in order to have a chance to schedule a
-coroutine switch.
-
-The psycogreen package is a contained of callbacks to make psycopg2 work with
-coroutine libraries, using asynchronous calls internally but offering a
-blocking interface so that regular code can run unmodified.
+Psycopg is a C extension module, so it cannot be monkey-patched to become
+coroutine-friendly. Instead it exposes `a hook`__ that coroutine libraries can
+use to install a function integrating with their event scheduler. Psycopg will
+call the function whenever it executes a libpq call that may block.
+`psycogreen` is a collection of "wait callbacks" useful to integrate Psycopg
+with different coroutine libraries.
 
 
+.. _psycogreen: https://bitbucket.org/dvarrazzo/psycogreen
 .. _Psycopg: http://initd.org/psycopg/
 .. __: http://initd.org/psycopg/articles/2010/05/16/psycopg-220-released/
 .. __: http://initd.org/psycopg/docs/advanced.html#support-to-coroutine-libraries
 .. __: http://initd.org/psycopg/docs/extensions.html#psycopg2.extensions.set_wait_callback
 
 
-Eventlet
---------
+Module ``psycogreen.eventlet``
+------------------------------
 
 `Eventlet`_ support Psycopg out-of-the-box: Psycopg can be patched together
 with the standard library: see `the documentation`__.
@@ -30,16 +31,40 @@ with the standard library: see `the documentation`__.
 .. _Eventlet: http://eventlet.net/
 .. __: http://eventlet.net/doc/patching.html#monkeypatching-the-standard-library
 
+If for any reason you want to avoid using Eventlet monkeypatching you can use
+``psycogreen.eventlet.make_psycopg_green()``.
 
-gevent
-------
+Function ``psycogreen.eventlet.eventlet_wait_callback(conn)``
+    A wait callback integrating with Eventlet events loop.
 
-A wait callback implementation for `gevent`_ is provided here: check
-`psyco_gevent.py`__ and this `test example`__.
+Function ``psycogreen.eventlet.make_psycopg_green()``
+    Register ``eventlet_wait_callback()`` into psycopg2
+
+An example script showing concurrent usage of ``psycopg2`` with ``urlopen()``
+with Eventlet is available in |tests/test_eventlet.py|__.
+
+.. |tests/test_eventlet.py| replace:: ``tests/test_eventlet.py``
+.. __: https://bitbucket.org/dvarrazzo/psycogreen/src/master/tests/test_eventlet.py
+
+
+Module ``psycogreen.gevent``
+----------------------------
+
+In order to use psycopg2 asynchronously with `gevent`_ you can use
+``psycogreen.gevent.make_psycopg_green()``.
+
+Function ``psycogreen.gevent.gevent_wait_callback(conn)``
+    A wait callback integrating with gevent events loop.
+
+Function ``psycogreen.gevent.make_psycopg_green()``
+    Register ``gevent_wait_callback()`` into psycopg2
+
+An example script showing concurrent usage of ``psycopg2`` with ``urlopen()``
+with gevent is available in |tests/test_gevent.py|__.
 
 .. _gevent: http://www.gevent.org/
-.. __: https://bitbucket.org/dvarrazzo/psycogreen/src/tip/gevent/psyco_gevent.py
-.. __: https://bitbucket.org/dvarrazzo/psycogreen/src/tip/gevent/test_gevent.py
+.. |tests/test_gevent.py| replace:: ``tests/test_gevent.py``
+.. __: https://bitbucket.org/dvarrazzo/psycogreen/src/master/tests/test_gevent.py
 
 
 uWSGI green threads
