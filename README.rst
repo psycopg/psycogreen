@@ -1,7 +1,7 @@
-Coroutine support for Psycopg
-=============================
+psycogreen -- integrate psycopg2 with coroutine libraries
+=========================================================
 
-Starting from `release 2.2`__, `Psycopg`_ offers `coroutines support`__.
+Since `release 2.2`__, `Psycopg`_ offers `coroutines support`__.
 
 Psycopg is a C extension module, so it can't be monkey-patched to be
 coroutine-friendly. Instead it now exposes `a hook`__
@@ -10,8 +10,10 @@ hook whenever it executes a libpq call that may block. Coroutine libraries can
 implement their "wait callaback" in order to have a chance to schedule a
 coroutine switch.
 
-In this project there are wait callback implementations for a few coroutine
-libraries: they are licensed in order to allow their inclusion in the library.
+The psycogreen package is a contained of callbacks to make psycopg2 work with
+coroutine libraries, using asynchronous calls internally but offering a
+blocking interface so that regular code can run unmodified.
+
 
 .. _Psycopg: http://initd.org/psycopg/
 .. __: http://initd.org/psycopg/articles/2010/05/16/psycopg-220-released/

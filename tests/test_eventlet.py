@@ -29,12 +29,11 @@ If the test works you should see download tasks overlapping query tasks.
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 #  THE SOFTWARE.
 
-import gevent
-import gevent.monkey
-gevent.monkey.patch_all()
+import eventlet
+eventlet.monkey_patch()
 
-import psyco_gevent
-psyco_gevent.make_psycopg_green()
+import psycogreen.eventlet
+psycogreen.eventlet.make_psycopg_green()
 
 import urllib2  # green
 
@@ -43,7 +42,7 @@ import psycopg2
 import logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s")
 logger = logging.getLogger()
-logger.info("testing psycopg2 with gevent")
+logger.info("testing psycopg2 with eventlet")
 
 conn = psycopg2.connect("dbname=postgres")
 
@@ -62,12 +61,11 @@ def fetch(num, secs):
         logger.info("query %d end", i)
 
 logger.info("making jobs")
-jobs = [
-    gevent.spawn(download, 2, 3),
-    gevent.spawn(fetch, 3, 2),
-    ]
+pool = eventlet.GreenPool()
+pool.spawn(download, 2, 3),
+pool.spawn(fetch, 3, 2),
 
 logger.info("join begin")
-gevent.joinall(jobs)
+pool.waitall()
 logger.info("join end")
 
