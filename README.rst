@@ -1,4 +1,4 @@
-psycogreen -- integrating psycopg2 with coroutine libraries
+psycogreen -- psycopg2 integration with coroutine libraries
 ===========================================================
 
 The `psycogreen`_ package enables psycopg2 to work with coroutine libraries,

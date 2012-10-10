@@ -1,0 +1,4 @@
+include COPYING MANIFEST.in README.rst setup.py
+recursive-include psycogreen *.py
+recursive-include tests *.py
+recursive-include tools *.py
