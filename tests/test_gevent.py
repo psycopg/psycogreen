@@ -16,7 +16,7 @@ import gevent.monkey
 gevent.monkey.patch_all()
 
 import psycogreen.gevent
-psycogreen.gevent.make_psycopg_green()
+psycogreen.gevent.patch_psycopg()
 
 import urllib2  # green
 

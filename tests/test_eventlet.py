@@ -15,7 +15,7 @@ import eventlet
 eventlet.monkey_patch()
 
 import psycogreen.eventlet
-psycogreen.eventlet.make_psycopg_green()
+psycogreen.eventlet.patch_psycopg()
 
 import urllib2  # green
 

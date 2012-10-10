@@ -29,9 +29,9 @@ necessary. See `the documentation`__ for patching instruction.
 .. __: http://eventlet.net/doc/patching.html#monkeypatching-the-standard-library
 
 If for any reason you want to avoid using Eventlet monkeypatching you can use
-``psycogreen.eventlet.make_psycopg_green()``.
+``psycogreen.eventlet.patch_psycopg()``.
 
-Function ``psycogreen.eventlet.make_psycopg_green()``
+Function ``psycogreen.eventlet.patch_psycopg()``
     Enable async processing in Psycopg integrated with the Eventlet events
     loop.  It is performed by registering ``eventlet_wait_callback()`` as
     psycopg2 wait callback.
@@ -50,9 +50,9 @@ Module ``psycogreen.gevent``
 ----------------------------
 
 In order to use psycopg2 asynchronously with `gevent`_ you can use
-``psycogreen.gevent.make_psycopg_green()``.
+``psycogreen.gevent.patch_psycopg()``.
 
-Function ``psycogreen.gevent.make_psycopg_green()``
+Function ``psycogreen.gevent.patch_psycopg()``
     Enable async processing in Psycopg integrated with the gevent events
     loop.  It is performed by registering ``gevent_wait_callback()`` as
     psycopg2 wait callback.

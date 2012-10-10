@@ -1,6 +1,6 @@
 """A wait callback to allow psycopg2 cooperation with eventlet.
 
-Use `make_psycopg_green()` to enable eventlet support in Psycopg.
+Use `patch_psycopg()` to enable eventlet support in Psycopg.
 """
 
 # Copyright (C) 2010-2012 Daniele Varrazzo <daniele.varrazzo@gmail.com>
@@ -14,7 +14,7 @@ from psycopg2 import extensions
 
 from eventlet.hubs import trampoline
 
-def make_psycopg_green():
+def patch_psycopg():
     """Configure Psycopg to be used with eventlet in non-blocking way."""
     if not hasattr(extensions, 'set_wait_callback'):
         raise ImportError(
