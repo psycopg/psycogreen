@@ -1,0 +1,10 @@
+#!/bin/bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+if [ ! -d "$DIR/.black" ]; then
+    virtualenv -p python3.6 "$DIR/.black"
+    "$DIR/.black/bin/pip" install "black>=18.9b0"
+fi
+
+"$DIR/.black/bin/black" "$@"
