@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """A test to verify Psycopg collaboration with other blocking I/O.
 
-Please run the script ``tools/wait_server.py`` in a separate shell to make the
+Please run the script ``wait_server.py`` in a separate shell to make the
 test work.
 
 If the test works you should see download tasks overlapping query tasks.

@@ -1,4 +1,3 @@
-include COPYING MANIFEST.in README.rst setup.py
+include COPYING MANIFEST.in project.toml README.rst setup.py tox.ini
 recursive-include psycogreen *.py
-recursive-include tests *.py
-recursive-include tools *.py
+recursive-include tests *.py *.txt
