@@ -13,11 +13,11 @@ If the test works you should see download tasks overlapping query tasks.
 
 import eventlet
 
-eventlet.monkey_patch()
+eventlet.monkey_patch()  # noqa
 
 import psycogreen.eventlet
 
-psycogreen.eventlet.patch_psycopg()
+psycogreen.eventlet.patch_psycopg()  # noqa
 
 import urllib2  # green
 
@@ -36,7 +36,7 @@ def download(num, secs):
     url = "http://localhost:8000/%d/" % secs
     for i in range(num):
         logger.info("download %d start", i)
-        data = urllib2.urlopen(url).read()
+        urllib2.urlopen(url).read()
         logger.info("download %d end", i)
 
 

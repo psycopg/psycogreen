@@ -21,7 +21,7 @@ Topic :: Database
 kwargs = {}
 try:
     kwargs['long_description'] = open('README.rst').read()
-except:
+except Exception:
     pass
 
 setup(

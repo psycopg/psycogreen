@@ -18,7 +18,7 @@ def wait_app(environ, start_response):
     start_response(status, headers)
     try:
         secs = int(environ['PATH_INFO'].replace('/', ''))
-    except:
+    except Exception:
         secs = 0
 
     time.sleep(secs)
