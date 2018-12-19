@@ -1,0 +1,5 @@
+six
+pytest
+gevent
+eventlet
+psycopg2
