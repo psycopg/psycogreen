@@ -20,7 +20,7 @@ import psycogreen.gevent
 
 psycogreen.gevent.patch_psycopg()  # noqa
 
-import urllib2  # green
+from six.moves.urllib.request import urlopen  # green
 
 import psycopg2
 
@@ -37,7 +37,7 @@ def download(num, secs):
     url = "http://localhost:8000/%d/" % secs
     for i in range(num):
         logger.info("download %d start", i)
-        urllib2.urlopen(url).read()
+        urlopen(url).read()
         logger.info("download %d end", i)
 
 

@@ -22,7 +22,7 @@ def wait_app(environ, start_response):
         secs = 0
 
     time.sleep(secs)
-    return [str(secs)]
+    return [str(secs).encode('ascii')]
 
 
 httpd = make_server('', 8000, wait_app)
