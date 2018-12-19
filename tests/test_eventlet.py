@@ -12,9 +12,11 @@ If the test works you should see download tasks overlapping query tasks.
 
 
 import eventlet
+
 eventlet.monkey_patch()
 
 import psycogreen.eventlet
+
 psycogreen.eventlet.patch_psycopg()
 
 import urllib2  # green
@@ -22,11 +24,13 @@ import urllib2  # green
 import psycopg2
 
 import logging
+
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s")
 logger = logging.getLogger()
 logger.info("testing psycopg2 with eventlet")
 
 conn = psycopg2.connect("dbname=postgres")
+
 
 def download(num, secs):
     url = "http://localhost:8000/%d/" % secs
@@ -35,12 +39,14 @@ def download(num, secs):
         data = urllib2.urlopen(url).read()
         logger.info("download %d end", i)
 
+
 def fetch(num, secs):
     cur = conn.cursor()
     for i in range(num):
         logger.info("query %d start", i)
         cur.execute("select pg_sleep(%s)", (secs,))
         logger.info("query %d end", i)
+
 
 logger.info("making jobs")
 pool = eventlet.GreenPool()
@@ -50,4 +56,3 @@ pool.spawn(fetch, 3, 2),
 logger.info("join begin")
 pool.waitall()
 logger.info("join end")
-

@@ -13,9 +13,11 @@ If the test works you should see download tasks overlapping query tasks.
 
 import gevent
 import gevent.monkey
+
 gevent.monkey.patch_all()
 
 import psycogreen.gevent
+
 psycogreen.gevent.patch_psycopg()
 
 import urllib2  # green
@@ -23,11 +25,13 @@ import urllib2  # green
 import psycopg2
 
 import logging
+
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s")
 logger = logging.getLogger()
 logger.info("testing psycopg2 with gevent")
 
 conn = psycopg2.connect("dbname=postgres")
+
 
 def download(num, secs):
     url = "http://localhost:8000/%d/" % secs
@@ -36,6 +40,7 @@ def download(num, secs):
         data = urllib2.urlopen(url).read()
         logger.info("download %d end", i)
 
+
 def fetch(num, secs):
     cur = conn.cursor()
     for i in range(num):
@@ -43,13 +48,10 @@ def fetch(num, secs):
         cur.execute("select pg_sleep(%s)", (secs,))
         logger.info("query %d end", i)
 
+
 logger.info("making jobs")
-jobs = [
-    gevent.spawn(download, 2, 3),
-    gevent.spawn(fetch, 3, 2),
-    ]
+jobs = [gevent.spawn(download, 2, 3), gevent.spawn(fetch, 3, 2)]
 
 logger.info("join begin")
 gevent.joinall(jobs)
 logger.info("join end")
-
