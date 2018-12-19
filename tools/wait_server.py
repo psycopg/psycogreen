@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """A server to test with blocking I/O."""
 
-# Copyright (C) 2010-2012 Daniele Varrazzo <daniele.varrazzo@gmail.com>
+# Copyright (C) 2010-2018 Daniele Varrazzo <daniele.varrazzo@gmail.com>
 # All rights reserved.  See COPYING file for details.
 
 from __future__ import print_function
