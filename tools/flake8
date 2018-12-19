@@ -1,0 +1,10 @@
+#!/bin/bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+if [ ! -d "$DIR/.flake8" ]; then
+    virtualenv -p python2.7 "$DIR/.flake8"
+    "$DIR/.flake8/bin/pip" install "flake8>=3.6"
+fi
+
+"$DIR/.flake8/bin/flake8" "$@"
