@@ -3,7 +3,7 @@
 psycogreen -- setup script
 """
 
-# Copyright (C) 2010-2018 Daniele Varrazzo <daniele.varrazzo@gmail.com>
+# Copyright (C) 2010-2020 Daniele Varrazzo <daniele.varrazzo@gmail.com>
 
 
 from setuptools import setup

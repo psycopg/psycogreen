@@ -7,7 +7,7 @@ test work.
 If the test works you should see download tasks overlapping query tasks.
 """
 
-# Copyright (C) 2010-2018 Daniele Varrazzo <daniele.varrazzo@gmail.com>
+# Copyright (C) 2010-2020 Daniele Varrazzo <daniele.varrazzo@gmail.com>
 # All rights reserved.  See COPYING file for details.
 
 

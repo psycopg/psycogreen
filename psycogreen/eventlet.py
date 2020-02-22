@@ -3,7 +3,7 @@
 Use `patch_psycopg()` to enable eventlet support in Psycopg.
 """
 
-# Copyright (C) 2010-2018 Daniele Varrazzo <daniele.varrazzo@gmail.com>
+# Copyright (C) 2010-2020 Daniele Varrazzo <daniele.varrazzo@gmail.com>
 # All rights reserved.  See COPYING file for details.
 
 
