@@ -5,4 +5,4 @@
 # All rights reserved.  See COPYING file for details.
 
 
-__version__ = '1.0.1'
+__version__ = '1.0.2'
