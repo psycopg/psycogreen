@@ -35,5 +35,9 @@ setup(
     packages=['psycogreen'],
     classifiers=[x for x in classifiers.split('\n') if x],
     version=__version__,
+    project_urls={
+        'Funding': 'https://github.com/sponsors/dvarrazzo',
+        'Bug tracker': 'https://github.com/psycopg/psycogreen/issues',
+    },
     **kwargs
 )
