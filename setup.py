@@ -30,7 +30,7 @@ setup(
     description='psycopg2 integration with coroutine libraries',
     author='Daniele Varrazzo',
     author_email='daniele.varrazzo@gmail.com',
-    url='https://bitbucket.org/dvarrazzo/psycogreen',
+    url='https://github.com/psycopg/psycogreen/',
     license='BSD',
     packages=['psycogreen'],
     classifiers=[x for x in classifiers.split('\n') if x],

@@ -13,7 +13,7 @@ call the function whenever it executes a libpq call that may block.
 `psycogreen` is a collection of "wait callbacks" useful to integrate Psycopg
 with different coroutine libraries.
 
-.. _psycogreen: https://bitbucket.org/dvarrazzo/psycogreen
+.. _psycogreen: https://github.com/psycopg/psycogreen
 .. _Psycopg: http://initd.org/psycopg/
 .. __: http://initd.org/psycopg/docs/advanced.html#support-to-coroutine-libraries
 .. __: http://initd.org/psycopg/docs/extensions.html#psycopg2.extensions.set_wait_callback
@@ -43,7 +43,7 @@ An example script showing concurrent usage of ``psycopg2`` with ``urlopen()``
 with Eventlet is available in |tests/test_eventlet.py|__.
 
 .. |tests/test_eventlet.py| replace:: ``tests/test_eventlet.py``
-.. __: https://bitbucket.org/dvarrazzo/psycogreen/src/master/tests/test_eventlet.py
+.. __: https://github.com/psycopg/psycogreen/blob/master/tests/test_eventlet.py
 
 
 Module ``psycogreen.gevent``
@@ -65,7 +65,7 @@ with gevent is available in |tests/test_gevent.py|__.
 
 .. _gevent: http://www.gevent.org/
 .. |tests/test_gevent.py| replace:: ``tests/test_gevent.py``
-.. __: https://bitbucket.org/dvarrazzo/psycogreen/src/master/tests/test_gevent.py
+.. __: https://github.com/psycopg/psycogreen/blob/master/tests/test_gevent.py
 
 
 uWSGI green threads
