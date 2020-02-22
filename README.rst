@@ -19,6 +19,12 @@ with different coroutine libraries.
 .. __: http://initd.org/psycopg/docs/extensions.html#psycopg2.extensions.set_wait_callback
 
 
+Installation
+------------
+
+``pip install psycogreen``
+
+
 Module ``psycogreen.eventlet``
 ------------------------------
 
