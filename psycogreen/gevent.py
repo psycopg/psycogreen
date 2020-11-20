@@ -15,6 +15,12 @@ from psycopg2 import extensions
 from gevent.socket import wait_read, wait_write
 
 
+def is_psycopg_patched():
+    """Return True if psycopg is patched, False otherwise"""
+    if not hasattr(extensions, 'set_wait_callback'):
+        return False
+    return extensions.get_wait_callback() == gevent_wait_callback
+
 def patch_psycopg():
     """Configure Psycopg to be used with gevent in non-blocking way."""
     if not hasattr(extensions, 'set_wait_callback'):

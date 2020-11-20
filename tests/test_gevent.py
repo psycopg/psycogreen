@@ -18,7 +18,9 @@ gevent.monkey.patch_all()  # noqa
 
 import psycogreen.gevent
 
+assert psycogreen.gevent.is_psycopg_patched() == False
 psycogreen.gevent.patch_psycopg()  # noqa
+assert psycogreen.gevent.is_psycopg_patched()
 
 from six.moves.urllib.request import urlopen  # green
 
