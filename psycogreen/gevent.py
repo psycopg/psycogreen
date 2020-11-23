@@ -17,7 +17,7 @@ from gevent.socket import wait_read, wait_write
 
 def is_psycopg_patched():
     """Return True if psycopg is patched, False otherwise"""
-    if not hasattr(extensions, 'set_wait_callback'):
+    if not hasattr(extensions, 'get_wait_callback'):
         return False
     return extensions.get_wait_callback() == gevent_wait_callback
 
