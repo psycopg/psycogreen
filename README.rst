@@ -19,6 +19,25 @@ with different coroutine libraries.
 .. __: https://www.psycopg.org/docs/extensions.html#psycopg2.extensions.set_wait_callback
 
 
+What about Psycopg 3?
+---------------------
+
+The `Psycopg 3`_ module doesn't require psycogreen; psycogreen has no effect on
+Psycopg 3.
+
+In Psycopg 3:
+
+- gevent `is supported`__ automatically from 3.1.14 on. Please avoid to use
+  older versions.
+- Eventlet is currently not supported, as the project doesn't seem very active
+  anymore. Support can be added if requested.
+- uWsgi is currently in maintenance mode, so Psycopg 3 support doesn't seem
+  necessary.
+
+.. _Psycopg 3: https://www.psycopg.org/psycopg3/docs/
+.. __: https://www.psycopg.org/psycopg3/docs/advanced/async.html#gevent-support
+
+
 Installation
 ------------
 
